@@ -1,0 +1,34 @@
+% costdecade.sty
+% Typesetting cost-per-decade comparison tables.
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{costdecade}[2026/10/23 v0.1.0 Cost-per-decade comparison tables]
+\RequirePackage{array}
+
+% --- main table environment -------------------------------------------
+% \begin{costdecade}{Title}
+%   \cdsource{assumptions line}
+%   \cdrow{Item}{Price}{Service life (yrs)}{Cost per decade}
+%   ...
+%   \cdnote{small-print note}
+% \end{costdecade}
+\newenvironment{costdecade}[1]{%
+  \par\medskip\noindent
+  \begin{tabular}{@{}p{0.34\textwidth}rrr@{}}%
+  \multicolumn{4}{@{}l@{}}{\textbf{#1}}\\[2pt]
+  \textbf{Item} & \textbf{Price} & \textbf{Life (yrs)} & \textbf{Per decade}\\
+}{%
+  \end{tabular}\par\medskip
+}
+
+% \cdsource{text}: assumptions line under the title row
+\newcommand{\cdsource}[1]{\multicolumn{4}{@{}l@{}}{\footnotesize\itshape #1}\\[2pt]}
+
+% \cdrow{item}{price}{life}{per-decade}: one product row
+\newcommand{\cdrow}[4]{#1 & #2 & #3 & #4\\}
+
+% \cdnote{text}: small-print note under the table
+% (collect after the tabular by stacking it in the environment end is not
+%  possible without extra passes; instead place notes before \end.)
+\newcommand{\cdnote}[1]{\multicolumn{4}{@{}p{0.98\textwidth}@{}}{\footnotesize #1}\\}
+
+\endinput
